@@ -1,4 +1,4 @@
-package dev.stephantromer.kafka;
+package dev.stephantromer.kafka.consumer;
 
 import dev.stephantromer.kafka.model.Order;
 import lombok.extern.slf4j.Slf4j;

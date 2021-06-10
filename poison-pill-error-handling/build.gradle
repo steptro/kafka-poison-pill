@@ -1,0 +1,41 @@
+buildscript {
+    ext {
+        springBootVersion = '2.5.0'
+        springDependencyManagementVersion = '1.0.10.RELEASE'
+        lombokVersion = '1.18.12'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
+    id 'maven'
+}
+
+group 'dev.stephantromer'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring boot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
