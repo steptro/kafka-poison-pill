@@ -13,6 +13,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
+import org.springframework.kafka.listener.LoggingErrorHandler;
 import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
 
 import java.util.Map;
@@ -23,6 +24,11 @@ import java.util.Map;
 public class Config {
 
     private final KafkaProperties kafkaProperties;
+
+    @Bean
+    public LoggingErrorHandler errorHandler() {
+        return new LoggingErrorHandler();
+    }
 
     @Bean
     @ConditionalOnExpression("${spring.kafka.dlt.enable}")
