@@ -13,4 +13,4 @@ spring:
       spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
       spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
     dlt:
-      enable: false # Custom property
+      enable: true # Custom property
