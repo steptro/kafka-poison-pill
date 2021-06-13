@@ -5,6 +5,7 @@ import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +25,13 @@ public class Config {
     private final KafkaProperties kafkaProperties;
 
     @Bean
+    @ConditionalOnExpression("${spring.kafka.dlt.enable}")
     public SeekToCurrentErrorHandler errorHandler(DeadLetterPublishingRecoverer deadLetterPublishingRecoverer) {
         return new SeekToCurrentErrorHandler(deadLetterPublishingRecoverer);
     }
 
     @Bean
+    @ConditionalOnExpression("${spring.kafka.dlt.enable}")
     public DeadLetterPublishingRecoverer publisher() {
         DefaultKafkaProducerFactory<String, byte[]> defaultKafkaProducerFactory = new DefaultKafkaProducerFactory<>(kafkaProperties.buildProducerProperties(), new StringSerializer(), new ByteArraySerializer());
         KafkaTemplate<String, byte[]> bytesKafkaTemplate = new KafkaTemplate<>(defaultKafkaProducerFactory);
@@ -41,6 +44,7 @@ public class Config {
     }
 
     @Bean
+    @ConditionalOnExpression("${spring.kafka.dlt.enable}")
     public ConcurrentKafkaListenerContainerFactory<String, byte[]> bytesArrayListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, byte[]> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(bytesArrayConsumerFactory());
